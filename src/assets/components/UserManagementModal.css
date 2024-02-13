@@ -1,0 +1,70 @@
+.modal {
+  overflow-y: auto;
+  height: 80%;
+  border-radius: 8px;
+}
+
+.modal-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.form-item {
+  max-width: 49%;
+}
+
+.form-item-email {
+  width: 100%;
+}
+
+.address {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+}
+
+.address-label {
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+
+.address-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.geo {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+}
+
+.geo-label {
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+
+.geo-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.company {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+}
+
+.company-label {
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+
+.company-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
