@@ -1,19 +1,20 @@
 import React from "react";
 import { Form, Input, Modal } from "antd";
 import "assets/styles/components/UserManagementModal.css";
-
-interface Values {}
+import { UserManagementFormValuesModel } from "model/etc/userManagementFormValues.model";
 
 interface UserManagementModalProps {
   open: boolean;
-  onCreate: (values: Values) => void;
+  onCreate: (values: UserManagementFormValuesModel) => void;
   onCancel: () => void;
+  createLoading: boolean;
 }
 
 const UserManagementModal: React.FC<UserManagementModalProps> = ({
   open,
   onCreate,
   onCancel,
+  createLoading,
 }) => {
   const [form] = Form.useForm();
 
@@ -21,7 +22,7 @@ const UserManagementModal: React.FC<UserManagementModalProps> = ({
     <Modal
       open={open}
       title="Create a new user"
-      okText="Create"
+      okText={createLoading ? "Loading..." : "Create"}
       cancelText="Cancel"
       onCancel={onCancel}
       onOk={() => {
@@ -114,7 +115,7 @@ const UserManagementModal: React.FC<UserManagementModalProps> = ({
         <div className="company">
           <span className="company-label">Company:</span>
           <div className="company-details">
-            <Form.Item name="name" label="Name" className="form-item">
+            <Form.Item name="companyName" label="Name" className="form-item">
               <Input />
             </Form.Item>
             <Form.Item
