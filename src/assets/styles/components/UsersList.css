@@ -1,0 +1,36 @@
+.users-list {
+  width: 85%;
+  height: 100%;
+  padding-left: 20px;
+  border-left: 1px solid #1677ff;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.filters {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.users-table {
+  width: 100%;
+  overflow: auto;
+}
+
+@media only screen and (max-width: 992px) {
+  .users-list {
+    border-left: none;
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .filters {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 20px;
+  }
+}
