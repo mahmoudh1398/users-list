@@ -1,10 +1,12 @@
-import React from "react";
-import { Space, Table, Tag } from "antd";
+import { Table } from "antd";
 import type { TableProps } from "antd";
-import "assets/components/UsersList.css";
+import "assets/styles/components/UsersList.css";
+import SelectWithSearch from "./SelectWithSearch";
+import Search from "./Search";
 
 interface DataType {
   id: number;
+  key: number;
   name: string;
   username: string;
   email: string;
@@ -82,6 +84,7 @@ const columns: TableProps<DataType>["columns"] = [
 const data: DataType[] = [
   {
     id: 1,
+    key: 1,
     name: "Ervin Howell",
     username: "Antonette",
     email: "Shanna@melissa.tv",
@@ -107,8 +110,17 @@ const data: DataType[] = [
 
 const UsersList = () => {
   return (
-    <div className="users-list-wrapper">
-      <Table columns={columns} dataSource={data} pagination={false} />
+    <div className="users-list">
+      <div className="filters">
+        <SelectWithSearch />
+        <Search />
+      </div>
+      <Table
+        className="users-table"
+        columns={columns}
+        dataSource={data}
+        pagination={false}
+      />
     </div>
   );
 };

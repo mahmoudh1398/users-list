@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "antd";
 import UserManagementModal from "components/UserManagementModal";
-import "assets/pages/app.css";
+import "assets/styles/pages/app.css";
 import UsersList from "components/UsersList";
 
 const App = () => {
@@ -13,9 +13,10 @@ const App = () => {
   };
 
   return (
-    <div className="app-wrapper">
+    <div className="app">
       <Button
         type="primary"
+        className="management-user-btn"
         onClick={() => {
           setOpen(true);
         }}

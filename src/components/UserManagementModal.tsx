@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Input, Modal } from "antd";
-import "assets/components/UserManagementModal.css";
+import "assets/styles/components/UserManagementModal.css";
 
 interface Values {}
 
