@@ -1,5 +1,5 @@
 import { Select } from "antd";
-import "assets/styles/components/SelectWithSearch.css"
+import "assets/styles/components/SelectWithSearch.css";
 
 const onChange = (value: string) => {
   console.log(`selected ${value}`);

@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Button } from "antd";
 import UserManagementModal from "components/UserManagementModal";
 import "assets/styles/pages/app.css";
-import UsersList from "components/UsersList";
+import Users from "components/Users";
+import StoreProvider from "store/provider";
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -23,7 +24,9 @@ const App = () => {
       >
         Management User
       </Button>
-      <UsersList />
+      <StoreProvider>
+        <Users />
+      </StoreProvider>
       <UserManagementModal
         open={open}
         onCreate={onCreate}
