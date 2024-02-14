@@ -3,9 +3,9 @@ import type { TableProps } from "antd";
 import "assets/styles/components/Users.css";
 import SelectWithSearch from "./SelectWithSearch";
 import Search from "./Search";
-import { UserInTableEntityModel } from "model/entity/user.model";
-import { useUsers } from "queries/users";
 import Loading from "./Loading";
+import { UserInTableEntityModel } from "model/entity/user.model";
+import { useUsers } from "utils/hooks/useUsers";
 
 const columns: TableProps<UserInTableEntityModel>["columns"] = [
   {

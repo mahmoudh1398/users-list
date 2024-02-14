@@ -1,16 +1,54 @@
 import { useState } from "react";
 import { Button } from "antd";
-import UserManagementModal from "components/UserManagementModal";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import "assets/styles/pages/app.css";
+import UserManagementModal from "components/UserManagementModal";
 import Users from "components/Users";
-import StoreProvider from "store/provider";
+import { UserManagementFormValuesModel } from "model/etc/userManagementFormValues.model";
+import { UserEntityModel } from "model/entity/user.model";
+import { createUser } from "queries/users";
 
 const App = () => {
   const [open, setOpen] = useState(false);
 
-  const onCreate = (values: any) => {
-    console.log("Received values of form: ", values);
-    setOpen(false);
+  const queryClient = useQueryClient();
+
+  const createMutation = useMutation({
+    mutationFn: (values: Partial<UserEntityModel>) => createUser(values),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+    },
+  });
+
+  const onCreate = async (values: UserManagementFormValuesModel) => {
+    try {
+      const finalData: Partial<UserEntityModel> = {
+        name: values.name,
+        username: values.username,
+        email: values.email,
+        address: {
+          street: values?.street ? values.street : "",
+          suite: values?.suite ? values.suite : "",
+          city: values?.city ? values.city : "",
+          zipcode: values?.zipcode ? values.zipcode : "",
+          geo: {
+            lat: values?.lat ? values.lat : "",
+            lng: values?.lng ? values.lng : "",
+          },
+        },
+        phone: values?.phone ? values.phone : "",
+        website: values?.website ? values.website : "",
+        company: {
+          name: values?.companyName ? values.companyName : "",
+          catchPhrase: values?.catchPhrase ? values.catchPhrase : "",
+          bs: values?.bs ? values.bs : "",
+        },
+      };
+      await createMutation.mutateAsync(finalData);
+    } catch (error) {
+    } finally {
+      setOpen(false);
+    }
   };
 
   return (
@@ -24,15 +62,14 @@ const App = () => {
       >
         Management User
       </Button>
-      <StoreProvider>
-        <Users />
-      </StoreProvider>
+      <Users />
       <UserManagementModal
         open={open}
         onCreate={onCreate}
         onCancel={() => {
           setOpen(false);
         }}
+        createLoading={createMutation.isPending}
       />
     </div>
   );
