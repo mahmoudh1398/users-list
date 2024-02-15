@@ -5,7 +5,7 @@ import SelectWithSearch from "./SelectWithSearch";
 import Search from "./Search";
 import Loading from "./Loading";
 import { UserInTableEntityModel } from "model/entity/user.model";
-import { useUsers } from "utils/hooks/users";
+import { useGetUsers } from "utils/hooks/users";
 import { convertToTableData } from "utils/pure-function/convertToTableData";
 
 const columns: TableProps<UserInTableEntityModel>["columns"] = [
@@ -61,7 +61,7 @@ const columns: TableProps<UserInTableEntityModel>["columns"] = [
 ];
 
 const Users = () => {
-  const { data, isSuccess, isLoading, isError } = useUsers();
+  const { data, isSuccess, isLoading, isError } = useGetUsers();
   let tableData: UserInTableEntityModel[] = [];
   if (isSuccess && data) {
     tableData = convertToTableData(data);

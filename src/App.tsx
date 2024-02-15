@@ -1,25 +1,16 @@
 import { useState } from "react";
 import { Button } from "antd";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import "assets/styles/pages/app.css";
 import UserManagementModal from "components/UserManagementModal";
 import Users from "components/Users";
 import { UserManagementFormValuesModel } from "model/etc/userManagementFormValues.model";
 import { UserEntityModel } from "model/entity/user.model";
-import { createUser } from "queries/users";
-import { USERS_QUERY_KEY } from "enum/users-query-key.enum";
+import { useCreateUser } from "utils/hooks/users";
 
 const App = () => {
   const [open, setOpen] = useState(false);
 
-  const queryClient = useQueryClient();
-
-  const createMutation = useMutation({
-    mutationFn: (values: Partial<UserEntityModel>) => createUser(values),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [USERS_QUERY_KEY.users] });
-    },
-  });
+  const { create, createPending } = useCreateUser();
 
   const onCreate = async (values: UserManagementFormValuesModel) => {
     try {
@@ -45,7 +36,7 @@ const App = () => {
           bs: values?.bs ? values.bs : "",
         },
       };
-      await createMutation.mutateAsync(finalData);
+      await create(finalData);
     } catch (error) {
     } finally {
       setOpen(false);
@@ -70,7 +61,7 @@ const App = () => {
         onCancel={() => {
           setOpen(false);
         }}
-        createLoading={createMutation.isPending}
+        createLoading={createPending}
       />
     </div>
   );

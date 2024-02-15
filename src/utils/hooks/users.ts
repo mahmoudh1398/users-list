@@ -1,10 +1,30 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { USERS_QUERY_KEY } from "enum/users-query-key.enum";
-import { getUsers } from "queries/users";
+import { UserEntityModel } from "model/entity/user.model";
+import { createUser, getUsers } from "queries/users";
 
-export const useUsers = () => {
+export const useGetUsers = () => {
   return useQuery({
     queryKey: [USERS_QUERY_KEY.users],
     queryFn: getUsers,
+    staleTime: 30_000,
   });
+};
+
+export const useCreateUser = () => {
+  const queryClient = useQueryClient();
+
+  const createMutation = useMutation({
+    mutationFn: createUser,
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: [USERS_QUERY_KEY.users] });
+    },
+  });
+
+  return {
+    create: async (finalData: Partial<UserEntityModel>) =>
+      await createMutation.mutateAsync(finalData),
+    createPending: createMutation.isPending,
+  };
 };
