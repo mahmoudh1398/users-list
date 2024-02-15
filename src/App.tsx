@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import "assets/styles/pages/app.css";
 import UserManagementModal from "components/UserManagementModal";
 import Users from "components/Users";
@@ -10,7 +10,7 @@ import { useCreateUser } from "utils/hooks/users";
 const App = () => {
   const [open, setOpen] = useState(false);
 
-  const { create, createPending } = useCreateUser();
+  const { createUserQuery, createUserQueryPending } = useCreateUser();
 
   const onCreate = async (values: UserManagementFormValuesModel) => {
     try {
@@ -36,8 +36,10 @@ const App = () => {
           bs: values?.bs ? values.bs : "",
         },
       };
-      await create(finalData);
+      await createUserQuery(finalData);
+      message.success("User created successfully.");
     } catch (error) {
+      message.error("Create User failed.");
     } finally {
       setOpen(false);
     }
@@ -61,7 +63,7 @@ const App = () => {
         onCancel={() => {
           setOpen(false);
         }}
-        createLoading={createPending}
+        createLoading={createUserQueryPending}
       />
     </div>
   );

@@ -10,3 +10,8 @@ export const createUser = async (payload: Partial<UserEntityModel>) => {
   const res = await userServiceInstance.createUser(payload);
   return res.data;
 };
+
+export const deleteUser = async (id: number) => {
+  const res = await userServiceInstance.deleteUser(id);
+  return res.data;
+};
