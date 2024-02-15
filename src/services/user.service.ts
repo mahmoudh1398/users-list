@@ -11,6 +11,12 @@ class UserService extends BaseService {
   getUsers(): Promise<ApiResponse<Array<UserEntityModel>>> {
     return this.axiosInstanceWithoutToken.get(USERS_ENDPOINT.users);
   }
+
+  deleteUser(id: number) {
+    return this.axiosInstanceWithoutToken.delete(
+      `${USERS_ENDPOINT.users}/${id}`
+    );
+  }
 }
 
 export const userServiceInstance = new UserService();

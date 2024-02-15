@@ -7,6 +7,7 @@ import Loading from "./Loading";
 import { UserInTableEntityModel } from "model/entity/user.model";
 import { useGetUsers } from "utils/hooks/users";
 import { convertToTableData } from "utils/pure-function/convertToTableData";
+import UserAction from "./UserAction";
 
 const columns: TableProps<UserInTableEntityModel>["columns"] = [
   {
@@ -47,7 +48,7 @@ const columns: TableProps<UserInTableEntityModel>["columns"] = [
     key: "website",
   },
   {
-    title: "company",
+    title: "Company",
     dataIndex: "company",
     key: "company",
     render: ({ name, catchPhrase, bs }) => {
@@ -56,6 +57,13 @@ const columns: TableProps<UserInTableEntityModel>["columns"] = [
           {name}, {catchPhrase}, {bs}
         </p>
       );
+    },
+  },
+  {
+    title: "Action",
+    key: "action",
+    render: (_, record) => {
+      return <UserAction record={record} />;
     },
   },
 ];
