@@ -10,6 +10,7 @@ import UserAction from "./UserAction";
 import SearchSelect from "./SearchSelect";
 import { useEffect, useState } from "react";
 import { filterDataByName } from "utils/pure-function/filterDataByName";
+import { filterDataByAnyProperty } from "utils/pure-function/filterDataByAnyProperty";
 
 const columns: TableProps<UserInTableEntityModel>["columns"] = [
   {
@@ -75,6 +76,7 @@ const Users = () => {
 
   const [tableData, setTableData] = useState<UserInTableEntityModel[]>([]);
   const [selectedUser, setSelectedUser] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (isSuccess && data) {
@@ -94,11 +96,23 @@ const Users = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedUser]);
 
+  useEffect(() => {
+    if (searchTerm && data) {
+      const filteredData = filterDataByAnyProperty(data, searchTerm);
+      const convertedData = convertToTableData(filteredData);
+      setTableData(convertedData);
+    }
+    if (!searchTerm && data) {
+      setTableData(convertToTableData(data));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchTerm]);
+
   return (
     <div className="users">
       <div className="filters">
         <SearchSelect setSelectedUser={setSelectedUser} />
-        <Search />
+        <Search setSearchTerm={setSearchTerm} />
       </div>
       {isLoading ? (
         <div className="loading-wrapper">
