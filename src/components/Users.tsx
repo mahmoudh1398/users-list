@@ -5,7 +5,8 @@ import SelectWithSearch from "./SelectWithSearch";
 import Search from "./Search";
 import Loading from "./Loading";
 import { UserInTableEntityModel } from "model/entity/user.model";
-import { useUsers } from "utils/hooks/useUsers";
+import { useUsers } from "utils/hooks/users";
+import { convertToTableData } from "utils/pure-function/convertToTableData";
 
 const columns: TableProps<UserInTableEntityModel>["columns"] = [
   {
@@ -61,11 +62,12 @@ const columns: TableProps<UserInTableEntityModel>["columns"] = [
 
 const Users = () => {
   const { data, isSuccess, isLoading, isError } = useUsers();
-  const finalData: UserInTableEntityModel[] = [];
+  let tableData: UserInTableEntityModel[] = [];
   if (isSuccess && data) {
-    for (const item of data) {
-      finalData.push({ ...item, key: item.id });
-    }
+    tableData = convertToTableData(data);
+  }
+  if (isError) {
+    tableData = [];
   }
 
   return (
@@ -82,7 +84,7 @@ const Users = () => {
         <Table
           className="users-table"
           columns={columns}
-          dataSource={isError ? [] : finalData}
+          dataSource={tableData}
           pagination={false}
         />
       )}

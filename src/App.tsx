@@ -7,6 +7,7 @@ import Users from "components/Users";
 import { UserManagementFormValuesModel } from "model/etc/userManagementFormValues.model";
 import { UserEntityModel } from "model/entity/user.model";
 import { createUser } from "queries/users";
+import { USERS_QUERY_KEY } from "enum/users-query-key.enum";
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -16,7 +17,7 @@ const App = () => {
   const createMutation = useMutation({
     mutationFn: (values: Partial<UserEntityModel>) => createUser(values),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries({ queryKey: [USERS_QUERY_KEY.users] });
     },
   });
 
