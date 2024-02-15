@@ -12,6 +12,13 @@ class UserService extends BaseService {
     return this.axiosInstanceWithoutToken.get(USERS_ENDPOINT.users);
   }
 
+  updateUser(id: number, payload: Partial<UserEntityModel>) {
+    return this.axiosInstanceWithoutToken.put(
+      `${USERS_ENDPOINT.users}/${id}`,
+      payload
+    );
+  }
+
   deleteUser(id: number) {
     return this.axiosInstanceWithoutToken.delete(
       `${USERS_ENDPOINT.users}/${id}`
