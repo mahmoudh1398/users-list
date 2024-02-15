@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Form, Input, Modal } from "antd";
 import "assets/styles/components/UserManagementModal.css";
-import { UserManagementFormValuesModel } from "model/etc/userManagementFormValues.model";
+import { UserManagementFormValuesModel } from "model/etc/user-management-form-values.model";
 import { UserInTableEntityModel } from "model/entity/user.model";
 
 interface UserManagementModalProps {

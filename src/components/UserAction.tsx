@@ -6,7 +6,7 @@ import {
 import DeleteConfirm from "./DeleteConfirm";
 import UserManagementModal from "./UserManagementModal";
 import { useState } from "react";
-import { UserManagementFormValuesModel } from "model/etc/userManagementFormValues.model";
+import { UserManagementFormValuesModel } from "model/etc/user-management-form-values.model";
 import { useUpdateUser } from "utils/hooks/users";
 
 interface UserActionProps {
