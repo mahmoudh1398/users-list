@@ -1,28 +1,55 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Input, Modal } from "antd";
 import "assets/styles/components/UserManagementModal.css";
 import { UserManagementFormValuesModel } from "model/etc/userManagementFormValues.model";
+import { UserInTableEntityModel } from "model/entity/user.model";
 
 interface UserManagementModalProps {
   open: boolean;
-  onCreate: (values: UserManagementFormValuesModel) => void;
+  onSubmit: (values: UserManagementFormValuesModel) => void;
   onCancel: () => void;
-  createLoading: boolean;
+  loading: boolean;
+  headingText: string;
+  submitButtonText: string;
+  userDataForEdit?: UserInTableEntityModel;
 }
 
 const UserManagementModal: React.FC<UserManagementModalProps> = ({
   open,
-  onCreate,
+  onSubmit,
   onCancel,
-  createLoading,
+  loading,
+  headingText,
+  submitButtonText,
+  userDataForEdit,
 }) => {
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (userDataForEdit) {
+      form.setFieldValue("name", userDataForEdit.name);
+      form.setFieldValue("username", userDataForEdit.username);
+      form.setFieldValue("email", userDataForEdit.email);
+      form.setFieldValue("street", userDataForEdit.address.street);
+      form.setFieldValue("suite", userDataForEdit.address.suite);
+      form.setFieldValue("city", userDataForEdit.address.city);
+      form.setFieldValue("zipcode", userDataForEdit.address.zipcode);
+      form.setFieldValue("lat", userDataForEdit.address.geo.lat);
+      form.setFieldValue("lng", userDataForEdit.address.geo.lng);
+      form.setFieldValue("phone", userDataForEdit.phone);
+      form.setFieldValue("website", userDataForEdit.website);
+      form.setFieldValue("companyName", userDataForEdit.company.name);
+      form.setFieldValue("catchPhrase", userDataForEdit.company.catchPhrase);
+      form.setFieldValue("bs", userDataForEdit.company.bs);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userDataForEdit]);
 
   return (
     <Modal
       open={open}
-      title="Create a new user"
-      okText={createLoading ? "Loading..." : "Create"}
+      title={headingText}
+      okText={loading ? "Loading..." : submitButtonText}
       cancelText="Cancel"
       onCancel={onCancel}
       onOk={() => {
@@ -30,7 +57,7 @@ const UserManagementModal: React.FC<UserManagementModalProps> = ({
           .validateFields()
           .then((values) => {
             form.resetFields();
-            onCreate(values);
+            onSubmit(values);
           })
           .catch((info) => {
             console.log("Validate Failed:", info);

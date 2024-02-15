@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { USERS_QUERY_KEY } from "enum/users-query-key.enum";
 import { UserEntityModel } from "model/entity/user.model";
-import { createUser, deleteUser, getUsers } from "queries/users";
+import { createUser, getUsers, updateUser, deleteUser } from "queries/users";
 
 export const useGetUsers = () => {
   return useQuery({
@@ -26,6 +26,24 @@ export const useCreateUser = () => {
     createUserQuery: async (finalData: Partial<UserEntityModel>) =>
       await createMutation.mutateAsync(finalData),
     createUserQueryPending: createMutation.isPending,
+  };
+};
+
+export const useUpdateUser = () => {
+  const queryClient = useQueryClient();
+
+  const updateMutation = useMutation({
+    mutationFn: updateUser,
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: [USERS_QUERY_KEY.users] });
+    },
+  });
+
+  return {
+    updateUserQuery: async (id: number, finalData: Partial<UserEntityModel>) =>
+      await updateMutation.mutateAsync({ id: id, payload: finalData }),
+    updateUserQueryPending: updateMutation.isPending,
   };
 };
 

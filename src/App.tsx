@@ -59,11 +59,13 @@ const App = () => {
       <Users />
       <UserManagementModal
         open={open}
-        onCreate={onCreate}
+        submitButtonText="Create"
+        headingText="Create a new user"
+        loading={createUserQueryPending}
+        onSubmit={onCreate}
         onCancel={() => {
           setOpen(false);
         }}
-        createLoading={createUserQueryPending}
       />
     </div>
   );
