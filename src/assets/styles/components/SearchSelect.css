@@ -1,10 +1,10 @@
-.select-with-search {
+.search-select {
   width: 100%;
   max-width: 30%;
 }
 
 @media only screen and (max-width: 600px) {
-  .select-with-search {
+  .search-select {
     max-width: none;
   }
 }

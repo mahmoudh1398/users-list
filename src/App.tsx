@@ -3,7 +3,7 @@ import { Button, message } from "antd";
 import "assets/styles/pages/app.css";
 import UserManagementModal from "components/UserManagementModal";
 import Users from "components/Users";
-import { UserManagementFormValuesModel } from "model/etc/userManagementFormValues.model";
+import { UserManagementFormValuesModel } from "model/etc/user-management-form-values.model";
 import { UserEntityModel } from "model/entity/user.model";
 import { useCreateUser } from "utils/hooks/users";
 
