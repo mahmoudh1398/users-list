@@ -2,7 +2,16 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { usersApiSlice } from "./users/users-api-slice";
 import favoritesReducer from "./favorites/favorites-slice";
 import storage from "redux-persist/lib/storage";
-import { persistReducer, persistStore } from "redux-persist";
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  persistReducer,
+  persistStore,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+} from "redux-persist";
 
 const reducers = {
   [usersApiSlice.reducerPath]: usersApiSlice.reducer,
@@ -25,9 +34,11 @@ const persistedCombinedReducers = persistReducer(
 export const store = configureStore({
   reducer: persistedCombinedReducers,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false }).concat(
-      usersApiSlice.middleware
-    ),
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(usersApiSlice.middleware),
 });
 
 export const persistedStore = persistStore(store);
