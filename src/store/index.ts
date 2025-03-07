@@ -1,13 +1,36 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { setupListeners } from "@reduxjs/toolkit/query";
-import { usersApi } from "../services/users";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { usersApiSlice } from "./users/users-api-slice";
+import favoritesReducer from "./favorites/favorites-slice";
+import storage from "redux-persist/lib/storage";
+import { persistReducer, persistStore } from "redux-persist";
+
+const reducers = {
+  [usersApiSlice.reducerPath]: usersApiSlice.reducer,
+  favorites: favoritesReducer,
+};
+
+const combinedReducers = combineReducers(reducers);
+
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["favorites"],
+};
+
+const persistedCombinedReducers = persistReducer(
+  persistConfig,
+  combinedReducers
+);
 
 export const store = configureStore({
-  reducer: {
-    [usersApi.reducerPath]: usersApi.reducer,
-  },
+  reducer: persistedCombinedReducers,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(usersApi.middleware),
+    getDefaultMiddleware({ serializableCheck: false }).concat(
+      usersApiSlice.middleware
+    ),
 });
 
-setupListeners(store.dispatch);
+export const persistedStore = persistStore(store);
+
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;

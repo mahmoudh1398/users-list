@@ -1,7 +1,7 @@
-import { useGetUsersQuery } from "./services/users";
+import { useFetchUsersQuery } from "./store/users/users-api-slice";
 
 function App() {
-  const { data, error, isLoading } = useGetUsersQuery("");
+  const { data = [], error, isLoading } = useFetchUsersQuery("");
 
   return (
     <>

@@ -1,4 +1,4 @@
-export default interface IUser {
+export type TUser = {
   createdAt: string;
   name: string;
   avatar: string;
