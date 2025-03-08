@@ -1,8 +1,8 @@
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../hooks/rtk-store";
-import { toggle } from "../store/favorites/favorites-slice";
-import { TFavoriteUser } from "../types/favorite-user.type";
+import { useAppDispatch, useAppSelector } from "@/hooks/rtk-store";
+import { toggle } from "@/store/favorites/favorites-slice";
+import { TFavoriteUser } from "@/types/favorite-user.type";
 
 type TProps = {
   user: TFavoriteUser;

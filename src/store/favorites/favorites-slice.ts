@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TFavoriteUser } from "../../types/favorite-user.type";
+import { TFavoriteUser } from "@/types/favorite-user.type";
 
 const initialState: TFavoriteUser[] = [];
 

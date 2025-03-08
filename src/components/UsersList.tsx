@@ -1,8 +1,8 @@
 import { Avatar, Box, Paper } from "@mui/material";
-import { TUser } from "../types/user.type";
+import { TUser } from "@/types/user.type";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import FavoriteButton from "./FavoriteButton";
-import dateFormatter from "../tools/date-formatter";
+import dateFormatter from "@/tools/date-formatter";
 
 type TProps = {
   users: TUser[];

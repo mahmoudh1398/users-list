@@ -1,10 +1,12 @@
-import { TextField } from "@mui/material";
-import { debounce } from "../tools/debounce";
+import { TextField, TextFieldVariants } from "@mui/material";
+import { debounce } from "@/tools/debounce";
 import { styled } from "@mui/material/styles";
 
 interface TProps {
   onChange: (query: string) => void;
   placeholder?: string;
+  variant?: TextFieldVariants;
+  width?: string;
 }
 
 const CssTextField = styled(TextField)({
@@ -33,6 +35,8 @@ const CssTextField = styled(TextField)({
 export default function SearchInput({
   onChange,
   placeholder = "Search...",
+  variant = "outlined",
+  width = "300px",
 }: TProps) {
   const handleOnChange = debounce((value: string) => {
     onChange(value);
@@ -40,8 +44,8 @@ export default function SearchInput({
 
   return (
     <CssTextField
-      variant="outlined"
-      sx={{ width: "300px" }}
+      variant={variant}
+      sx={{ width }}
       placeholder={placeholder}
       onChange={(e) => handleOnChange(e.target.value)}
     />
