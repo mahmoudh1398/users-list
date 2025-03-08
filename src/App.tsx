@@ -12,7 +12,19 @@ export default function App() {
   const { data: users = [], error, isLoading } = useFetchUsersQuery(query);
 
   return (
-    <Box sx={{ p: 2 }}>
+    <Box sx={{ p: 2, display: "flex", flexDirection: "column", gap: "20px" }}>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <SearchInput
+          onChange={(query) => setQuery(query)}
+          placeholder="Search user"
+        />
+      </Box>
       {error ? (
         <Box
           sx={{
@@ -25,34 +37,7 @@ export default function App() {
           <ErrorContent />
         </Box>
       ) : users ? (
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "20px",
-          }}
-        >
-          <Box
-            sx={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            {isLoading ? (
-              <Skeleton
-                variant="rounded"
-                width={300}
-                height={56}
-                sx={{ bgcolor: "grey.800" }}
-              />
-            ) : (
-              <SearchInput
-                onChange={(query) => setQuery(query)}
-                placeholder="Search user"
-              />
-            )}
-          </Box>
+        <Box>
           {isLoading ? (
             <Skeleton
               variant="rounded"
